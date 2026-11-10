@@ -484,7 +484,6 @@ function Home() {
               <div>
                 <span className="section-kicker">خطوتك التالية تبدأ هنا</span>
                 <h2 id="closing-title">لديك فكرة؟<br />لنجعلها تجربة رقمية تستحق.</h2>
-                <p>للاستفسار والطلب، تواصل معنا الآن عبر واتساب: <a className="contact-number" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" dir="ltr">0595155393</a></p>
               </div>
               <a className="button-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-testid="link-closing-services">
                 تواصل معنا الآن <MessageCircle size={17} aria-hidden="true" />

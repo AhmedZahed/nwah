@@ -266,7 +266,6 @@
 .closing-content { position: relative; display: flex; align-items: end; justify-content: space-between; gap: 30px; }
 .closing h2 { font-size: clamp(32px, 4vw, 49px); line-height: 1.35; letter-spacing: -.05em; margin: 10px 0 12px; max-width: 580px; }
 .closing p { font-size: 15px; color: #40534b; margin: 0; }
-.contact-number { display: inline-block; margin-inline-start: 5px; color: #173b37; font: 700 1em 'Manrope', sans-serif; text-underline-offset: 4px; }
 .closing .section-kicker { color: #ad563e; }
 .closing .button-primary { background: #173b37; color: #f5f1e7; white-space: nowrap; }
 .closing .button-primary:hover { background: #24645a; }
