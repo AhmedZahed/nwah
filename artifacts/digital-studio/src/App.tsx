@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -8,9 +8,11 @@ import {
   ArrowLeft,
   ArrowUpLeft,
   Check,
+  ChevronDown,
   Cloud,
   Fingerprint,
   Globe2,
+  MessageCircle,
   Menu,
   PanelsTopLeft,
   Search,
@@ -26,6 +28,7 @@ import {
 } from 'wouter';
 
 const queryClient = new QueryClient();
+const WHATSAPP_URL = 'https://wa.me/966595155393';
 
 const services = [
   {
@@ -33,42 +36,77 @@ const services = [
     number: '01',
     title: 'مواقع إلكترونية',
     description: 'مواقع سريعة ومدروسة، تقدّم قصتك بوضوح وتحول الزيارة إلى خطوة مفيدة.',
+    details: [
+      'تصميم متجاوب للجوال والكمبيوتر',
+      'صفحات تعريفية واضحة وسهلة التصفح',
+      'بنية سريعة ومهيأة لمحركات البحث',
+    ],
   },
   {
     icon: ShoppingBag,
     number: '02',
     title: 'متاجر إلكترونية',
     description: 'تجربة شراء بسيطة من أول نظرة حتى إتمام الطلب، على كل شاشة.',
+    details: [
+      'تنظيم المنتجات والتصنيفات',
+      'تجربة سلة وطلب سهلة وواضحة',
+      'تهيئة خيارات الدفع والشحن',
+    ],
   },
   {
     icon: Globe2,
     number: '03',
     title: 'تطبيقات ويب',
     description: 'أدوات رقمية مصممة حول طريقة عملك، لا حول قالب جاهز.',
+    details: [
+      'لوحات تحكم وأدوات حسب احتياج العمل',
+      'تجارب تفاعلية تناسب المستخدمين',
+      'حلول قابلة للتوسع مع نمو المشروع',
+    ],
   },
   {
     icon: Search,
     number: '04',
     title: 'تهيئة لمحركات البحث',
     description: 'أساس تقني ومحتوى منظم يساعدان جمهورك على العثور عليك.',
+    details: [
+      'تحسين بنية الصفحات والعناوين',
+      'تهيئة السرعة وتجربة الجوال',
+      'تنظيم المحتوى لمساعدة محركات البحث',
+    ],
   },
   {
     icon: Fingerprint,
     number: '05',
     title: 'هوية بصرية',
     description: 'نظام بصري متماسك يجعل حضورك معروفًا قبل أن تُقرأ الكلمات.',
+    details: [
+      'تصميم شعار وعناصر الهوية',
+      'اختيار الألوان والخطوط المناسبة',
+      'دليل مبسط لاستخدام الهوية',
+    ],
   },
   {
     icon: Cloud,
     number: '06',
     title: 'استضافة موثوقة',
     description: 'بيئة تشغيل مستقرة، مُهيأة لتبقي تجربتك الرقمية متاحة.',
+    details: [
+      'إعداد الاستضافة وربط النطاق',
+      'تفعيل شهادة اتصال آمن',
+      'مساعدة في نقل الموقع وإطلاقه',
+    ],
   },
   {
     icon: Wrench,
     number: '07',
     title: 'صيانة ودعم',
     description: 'متابعة وتحديثات مستمرة كي يظل موقعك يعمل كما ينبغي.',
+    details: [
+      'تحديثات دورية للموقع',
+      'متابعة الأداء ومعالجة المشكلات',
+      'دعم فني حسب نطاق الخدمة',
+    ],
   },
 ];
 
@@ -156,15 +194,25 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
 
   return (
     <span id={`count-${target}`} className="proof-number" aria-label={`${target}${suffix}`}>
-      {new Intl.NumberFormat('ar').format(value)}{suffix}
+      {new Intl.NumberFormat('en-US').format(value)}{suffix}
     </span>
+  );
+}
+
+function BrandSymbol({ className = '' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M7 25V8h17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m10 21 5.5-6 5 4L28 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="28" cy="10" r="2.5" fill="currentColor" />
+    </svg>
   );
 }
 
 function Brand() {
   return (
     <a className="brand" href="#home" aria-label="نواة الرقمية — الصفحة الرئيسية" data-testid="link-brand-home">
-      <span className="brand-mark" aria-hidden="true">ن</span>
+      <span className="brand-mark"><BrandSymbol /></span>
       <span className="brand-name">نواة الرقمية<small>NAWA DIGITAL</small></span>
     </a>
   );
@@ -173,9 +221,19 @@ function Brand() {
 function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [expandedService, setExpandedService] = useState<string | null>(null);
   usePageMotion();
 
   const closeMenu = () => setMenuOpen(false);
+  const toggleService = (serviceNumber: string) => {
+    setExpandedService((current) => current === serviceNumber ? null : serviceNumber);
+  };
+  const handleServiceKeyDown = (event: KeyboardEvent<HTMLElement>, serviceNumber: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleService(serviceNumber);
+    }
+  };
   const links = [
     { href: '#services', label: 'خدماتنا' },
     { href: '#approach', label: 'كيف نعمل' },
@@ -195,9 +253,12 @@ function Home() {
                   {link.label}
                 </a>
               ))}
+              <a className="mobile-contact" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>
+                تواصل معنا عبر واتساب <MessageCircle size={16} aria-hidden="true" />
+              </a>
             </nav>
-            <a className="nav-cta" href="#services" data-testid="link-nav-services-cta">
-              اكتشف خدماتنا <ArrowUpLeft size={15} aria-hidden="true" />
+            <a className="nav-cta" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-testid="link-nav-services-cta">
+              تواصل عبر واتساب <MessageCircle size={16} aria-hidden="true" />
             </a>
             <button
               className="menu-toggle"
@@ -236,7 +297,7 @@ function Home() {
             <div className="float-chip top">أداء أسرع<small>بنية رقمية محسوبة</small></div>
             <div className="dashboard" aria-hidden="true">
               <div className="dash-top">
-                <div className="dash-brand"><b>ن</b> مساحة عملك</div>
+                <div className="dash-brand"><b><BrandSymbol /></b> مساحة عملك</div>
                 <div className="dash-dots"><i /><i /><i /></div>
               </div>
               <div className="dash-main">
@@ -259,7 +320,7 @@ function Home() {
                   <span className="side-label">تجربة متوازنة</span>
                 </div>
               </div>
-              <div className="dash-foot"><span>تصميم يضع المستخدم أولًا</span><strong>ناوا / ٠١</strong></div>
+              <div className="dash-foot"><span>تصميم يضع المستخدم أولًا</span><strong>ناوا / 01</strong></div>
             </div>
             <div className="float-chip bottom">كل شيء في مكانه<small>تجربة واحدة، متكاملة</small></div>
           </div>
@@ -276,7 +337,7 @@ function Home() {
               <p>مشروعًا رقميًا منجزًا</p>
             </div>
             <div className="proof-stat">
-              <CountUp target={98} suffix="٪" />
+              <CountUp target={98} suffix="%" />
               <p>من العملاء يثقون بنا</p>
             </div>
           </div>
@@ -293,13 +354,31 @@ function Home() {
             <p className="section-lead">نربط الاستراتيجية بالتصميم والتقنية، لتجد كل مرحلة من رحلتك الرقمية يدًا خبيرة.</p>
           </div>
           <div className="service-grid">
-            {services.map(({ icon: Icon, number, title, description }, index) => (
-              <article className={`service-card reveal${index % 3 ? ` reveal-delay-${index % 3}` : ''}`} key={number} data-testid={`card-service-${number}`}>
+            {services.map(({ icon: Icon, number, title, description, details }, index) => (
+              <article
+                className={`service-card reveal${index % 3 ? ` reveal-delay-${index % 3}` : ''}`}
+                key={number}
+                data-testid={`card-service-${number}`}
+                role="button"
+                tabIndex={0}
+                aria-expanded={expandedService === number}
+                aria-controls={`service-details-${number}`}
+                onClick={() => toggleService(number)}
+                onKeyDown={(event) => handleServiceKeyDown(event, number)}
+              >
                 <span className="service-index">{number}</span>
                 <span className="service-icon"><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></span>
                 <h3>{title}</h3>
                 <p>{description}</p>
-                <ArrowLeft className="service-arrow" size={17} aria-hidden="true" />
+                <span className="service-action-row">
+                  <span className="service-action-label">{expandedService === number ? 'إخفاء التفاصيل' : 'اكتشف التفاصيل'}</span>
+                  <ChevronDown className="service-arrow" size={18} aria-hidden="true" />
+                </span>
+                <ul id={`service-details-${number}`} className={`service-details${expandedService === number ? ' open' : ''}`} aria-hidden={expandedService !== number}>
+                  {details.map((detail) => (
+                    <li key={detail}><Check size={15} aria-hidden="true" />{detail}</li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
@@ -329,13 +408,13 @@ function Home() {
           </div>
           <div className="steps">
             {[
-              ['١', 'نستمع', 'نفهم أهدافك، جمهورك، والتحدي الذي تريد أن تحله.'],
-              ['٢', 'نخطط', 'نرسم الهيكل والتجربة ونحدد ما يصنع الفرق فعلًا.'],
-              ['٣', 'نبني', 'نصمم ونطور باهتمام بالتفاصيل والأداء وسهولة الاستخدام.'],
-              ['٤', 'نطلق ونواصل', 'نختبر، نطلق، ونبقى إلى جانبك في التطوير والصيانة.'],
+              ['1', 'نستمع', 'نفهم أهدافك، جمهورك، والتحدي الذي تريد أن تحله.'],
+              ['2', 'نخطط', 'نرسم الهيكل والتجربة ونحدد ما يصنع الفرق فعلًا.'],
+              ['3', 'نبني', 'نصمم ونطور باهتمام بالتفاصيل والأداء وسهولة الاستخدام.'],
+              ['4', 'نطلق ونواصل', 'نختبر، نطلق، ونبقى إلى جانبك في التطوير والصيانة.'],
             ].map(([number, title, description], index) => (
               <article className={`step reveal${index ? ` reveal-delay-${Math.min(index, 3)}` : ''}`} key={number}>
-                <span className="step-num">{number} / ٠{index + 1}</span>
+                <span className="step-num">{number} / 0{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>
               </article>
@@ -405,10 +484,10 @@ function Home() {
               <div>
                 <span className="section-kicker">خطوتك التالية تبدأ هنا</span>
                 <h2 id="closing-title">لديك فكرة؟<br />لنجعلها تجربة رقمية تستحق.</h2>
-                <p>استكشف الخدمات، وتخيّل ما يمكن أن نبنيه معًا.</p>
+                <p>للاستفسار والطلب، تواصل معنا الآن عبر واتساب: <a className="contact-number" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" dir="ltr">0595155393</a></p>
               </div>
-              <a className="button-primary" href="#services" data-testid="link-closing-services">
-                ابدأ من خدماتنا <ArrowLeft size={16} aria-hidden="true" />
+              <a className="button-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-testid="link-closing-services">
+                تواصل معنا الآن <MessageCircle size={17} aria-hidden="true" />
               </a>
             </div>
           </div>
@@ -423,7 +502,7 @@ function Home() {
               {links.map((link) => <a href={link.href} key={link.href} data-testid={`link-footer-${link.href.slice(1)}`}>{link.label}</a>)}
             </nav>
           </div>
-          <p className="copyright">© NAWA DIGITAL</p>
+          <p className="copyright"><span>© NAWA DIGITAL</span><span>Made with love in Dammam</span></p>
         </div>
       </footer>
     </main>
