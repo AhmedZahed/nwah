@@ -229,6 +229,29 @@
 .portfolio-card h3 { font-size: 20px; line-height: 1.45; margin: 16px 0 2px; letter-spacing: -.03em; }
 .portfolio-card p { color: #596760; margin: 0; font-size: 15px; }
 .portfolio-card .sample-tag { display: inline-block; margin-top: 11px; color: #8d594a; font-size: 12px; font-weight: 700; }
+.portfolio-card .real-project-tag { color: #176b5e; }
+.law-gallery { position: absolute; inset: 0; display: flex; flex-direction: column; background: #f7f4e9; }
+.law-gallery-preview { position: relative; flex: 1; min-height: 0; width: 100%; display: grid; place-items: center; overflow: hidden; border: 0; padding: 10px 10px 0; background: transparent; cursor: zoom-in; }
+.law-gallery-preview img { display: block; width: 100%; height: 100%; object-fit: contain; border-radius: 8px; }
+.law-gallery-zoom { position: absolute; inset-inline-start: 18px; bottom: 14px; padding: 8px 13px; border-radius: 999px; background: rgba(23,59,55,.9); color: #f5f1e7; font-size: 13px; font-weight: 600; }
+.law-gallery-thumbnails, .law-gallery-dialog-thumbnails { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 10px 10px; }
+.law-gallery-thumb { display: block; flex: 0 0 auto; width: 48px; height: 32px; overflow: hidden; border: 2px solid transparent; border-radius: 6px; padding: 1px; background: #fff; cursor: pointer; transition: border-color .2s ease, transform .2s ease; }
+.law-gallery-thumb:hover { transform: translateY(-2px); }
+.law-gallery-thumb.active { border-color: #167c6c; }
+.law-gallery-thumb:focus-visible, .law-gallery-preview:focus-visible, .law-gallery-close:focus-visible, .law-gallery-nav:focus-visible { outline: 3px solid #e98768; outline-offset: 2px; }
+.law-gallery-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.law-gallery-backdrop { position: fixed; z-index: 80; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(10,23,24,.88); backdrop-filter: blur(8px); }
+.law-gallery-dialog { width: min(1120px, 100%); max-height: calc(100dvh - 40px); display: flex; flex-direction: column; gap: 12px; overflow: hidden; border: 1px solid rgba(245,241,231,.2); border-radius: 18px; padding: 16px; background: #f7f4e9; box-shadow: 0 24px 80px rgba(0,0,0,.32); }
+.law-gallery-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.law-gallery-dialog-header > div { display: flex; flex-direction: column; gap: 2px; }
+.law-gallery-dialog-header strong { color: #173b37; font-size: 17px; }
+.law-gallery-dialog-header span { color: #5a6c62; font-size: 13px; }
+.law-gallery-close, .law-gallery-nav { display: grid; place-items: center; flex: 0 0 auto; border: 1px solid #cbd7ca; border-radius: 50%; background: #fffdf6; color: #173b37; cursor: pointer; }
+.law-gallery-close { width: 42px; height: 42px; }
+.law-gallery-stage { flex: 1; min-height: 0; display: grid; grid-template-columns: 46px minmax(0,1fr) 46px; align-items: center; justify-items: center; gap: 10px; }
+.law-gallery-stage img { display: block; max-width: 100%; max-height: calc(100dvh - 190px); object-fit: contain; border-radius: 8px; background: #fff; }
+.law-gallery-nav { width: 42px; height: 42px; }
+.law-gallery-dialog-thumbnails { justify-content: center; overflow-x: auto; padding: 2px 4px 4px; }
 .sample-window { position: absolute; inset: 13% 11%; border-radius: 8px; overflow: hidden; box-shadow: 0 9px 24px rgba(29,46,39,.12); }
 .sample-browser { height: 12%; min-height: 13px; display: flex; align-items: center; gap: 3px; padding-inline: 8px; background: rgba(255,255,255,.78); }
 .sample-browser i { display: block; width: 4px; height: 4px; border-radius: 50%; background: #b8b9aa; }
@@ -395,6 +418,17 @@
   .portfolio-grid { grid-template-columns: 1fr; gap: 26px; }
   .portfolio-card, .portfolio-card:nth-child(n) { grid-column: 1; }
   .portfolio-frame { aspect-ratio: 1.4; }
+  .law-gallery-thumbnails { gap: 4px; padding: 7px 6px 8px; }
+  .law-gallery-thumb { width: 42px; height: 29px; }
+  .law-gallery-zoom { inset-inline-start: 13px; bottom: 11px; padding: 7px 11px; font-size: 12px; }
+  .law-gallery-backdrop { padding: 10px; }
+  .law-gallery-dialog { max-height: calc(100dvh - 20px); gap: 9px; border-radius: 13px; padding: 10px; }
+  .law-gallery-dialog-header strong { font-size: 15px; }
+  .law-gallery-dialog-header span { font-size: 12px; }
+  .law-gallery-stage { grid-template-columns: 36px minmax(0,1fr) 36px; gap: 4px; }
+  .law-gallery-stage img { max-height: calc(100dvh - 190px); }
+  .law-gallery-nav { width: 34px; height: 34px; }
+  .law-gallery-dialog-thumbnails { justify-content: flex-start; gap: 4px; }
   .sample-shop .sample-word { font-size: 13px; }
   .portfolio-card h3 { font-size: 21px; }
   .portfolio-card p { font-size: 16px; }

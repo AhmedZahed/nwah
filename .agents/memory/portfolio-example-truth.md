@@ -3,8 +3,8 @@ name: Portfolio examples
 description: The user wants real project samples in the agency website portfolio.
 ---
 
-The user now wants the agency portfolio to show real projects they have completed.
+The user wants the agency portfolio to show real work. Their six supplied screenshots depict different parts of one law-office website, not six separate projects.
 
-**Why:** The user said they have real examples and asked to add them to the website.
+**Why:** The user identified the first website as a law office, and the six screenshots share the same site identity.
 
-**How to apply:** Use only supplied project images and approved names or descriptions. Do not invent client names or results.
+**How to apply:** Keep the six images together as one project gallery. Use only supplied project details, and keep any remaining concept examples clearly labeled as illustrative.

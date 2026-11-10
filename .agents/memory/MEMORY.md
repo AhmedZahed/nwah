@@ -1,2 +1,2 @@
 - [Agency trust figures](agency-trust-figures.md) — The user asked to present more than 140 completed projects and 98% customer trust.
-- [Portfolio examples](portfolio-example-truth.md) — The user wants the portfolio to show authentic work samples, not invented client projects.
+- [Portfolio examples](portfolio-example-truth.md) — Six supplied law-office screenshots are one real project; keep other concepts clearly illustrative.
