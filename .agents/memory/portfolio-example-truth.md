@@ -1,10 +1,10 @@
 ---
-name: Portfolio demo examples
-description: The agency website uses illustrative examples instead of real client projects.
+name: Portfolio examples
+description: The user wants real project samples in the agency website portfolio.
 ---
 
-The user chose illustrative project examples and asked to create them without links or client details.
+The user now wants the agency portfolio to show real projects they have completed.
 
-**Why:** No real client project assets were provided, and the user selected demonstration examples.
+**Why:** The user said they have real examples and asked to add them to the website.
 
-**How to apply:** Keep examples clearly labeled as illustrative; do not present them as client work unless the user provides real projects.
+**How to apply:** Use only supplied project images and approved names or descriptions. Do not invent client names or results.
