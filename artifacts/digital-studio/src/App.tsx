@@ -5,8 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
 import {
-  ArrowLeft,
-  ArrowUpLeft,
   Check,
   ChevronDown,
   Cloud,
@@ -133,6 +131,15 @@ const faqs = [
   },
 ];
 
+const portfolioSamples = [
+  { type: 'shop', title: 'متجر إلكتروني', description: 'واجهة مرتبة لعرض المنتجات وتسهيل رحلة الشراء.' },
+  { type: 'food', title: 'موقع لمطعم', description: 'قائمة واضحة وهوية رقمية تفتح الشهية للاكتشاف.' },
+  { type: 'realestate', title: 'منصة عقارية', description: 'عرض بصري يساعد الزائر على استكشاف الخيارات.' },
+  { type: 'course', title: 'منصة تعليمية', description: 'مساحة منظمة للتعلم ومتابعة المحتوى.' },
+  { type: 'clinic', title: 'موقع لعيادة', description: 'معلومات وخدمات سهلة الوصول من أي جهاز.' },
+  { type: 'app', title: 'لوحة أعمال رقمية', description: 'مؤشرات وأدوات عمل ضمن تجربة واحدة.' },
+];
+
 function usePageMotion() {
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -236,6 +243,7 @@ function Home() {
   };
   const links = [
     { href: '#services', label: 'خدماتنا' },
+    { href: '#portfolio', label: 'نماذج توضيحية' },
     { href: '#approach', label: 'كيف نعمل' },
     { href: '#about', label: 'عن نواة' },
     { href: '#faq', label: 'أسئلة شائعة' },
@@ -282,8 +290,8 @@ function Home() {
               من أول انطباع إلى آخر نقرة — نبني مواقع ومتاجر وتطبيقات ويب تساعد أعمالك على التقدّم بثقة.
             </p>
             <div className="hero-actions">
-              <a className="button-primary" href="#services" data-testid="link-hero-services">
-                اكتشف ما يمكننا بناؤه <ArrowLeft size={16} aria-hidden="true" />
+              <a className="button-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-testid="link-hero-services">
+                اطلب موقعك عبر واتساب <MessageCircle size={17} aria-hidden="true" />
               </a>
               <a className="button-outline" href="#approach" data-testid="link-hero-approach">
                 تعرّف على طريقتنا
@@ -340,6 +348,47 @@ function Home() {
               <CountUp target={98} suffix="%" />
               <p>من العملاء يثقون بنا</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="section portfolio" id="portfolio" aria-labelledby="portfolio-title">
+        <div className="container-wide">
+          <div className="section-head reveal">
+            <div className="portfolio-intro">
+              <span className="section-kicker">نماذج من اتجاهاتنا</span>
+              <h2 className="section-title" id="portfolio-title">أفكار رقمية،<br />تأخذ شكلها المناسب.</h2>
+              <span className="portfolio-disclaimer">أمثلة توضيحية — ليست مشاريع لعملاء حقيقيين</span>
+            </div>
+            <p className="section-lead">ستة تصورات بصرية لأنواع تجارب يمكن أن نبنيها. كل مشروع يبدأ من احتياجك أنت، لا من قالب جاهز.</p>
+          </div>
+          <div className="portfolio-grid">
+            {portfolioSamples.map((sample, index) => (
+              <article className={`portfolio-card reveal${index % 3 ? ` reveal-delay-${index % 3}` : ''}`} key={sample.type}>
+                <div className={`portfolio-frame sample-${sample.type}`} role="img" aria-label={`تصور توضيحي: ${sample.title}`}>
+                  <div className="sample-window" aria-hidden="true">
+                    <div className="sample-browser"><i /><i /><i /></div>
+                    <div className="sample-page">
+                      {sample.type === 'shop' && <><span className="sample-word">اختيارك اليوم</span><span className="sample-product" /><span className="sample-copy" /></>}
+                      {sample.type === 'food' && <><span className="sample-plate" /><span className="sample-word" /></>}
+                      {sample.type === 'realestate' && <><span className="sample-sun" /><span className="sample-building" /></>}
+                      {sample.type === 'course' && <><span className="sample-word" /><span className="sample-book" /></>}
+                      {sample.type === 'clinic' && <><span className="sample-clinic-lines" /><span className="sample-cross" /></>}
+                      {sample.type === 'app' && <><span className="sample-sidebar" /><span className="sample-panel" /><span className="sample-tile" /></>}
+                    </div>
+                  </div>
+                </div>
+                <h3>{sample.title}</h3>
+                <p>{sample.description}</p>
+                <span className="sample-tag">تصور توضيحي</span>
+              </article>
+            ))}
+          </div>
+          <div className="portfolio-cta reveal">
+            <p>هل تبحث عن تجربة تناسب فكرتك تحديدًا؟ لنبدأ الحديث عنها.</p>
+            <a className="button-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
+              ناقش فكرتك معنا <MessageCircle size={17} aria-hidden="true" />
+            </a>
           </div>
         </div>
       </section>
@@ -484,6 +533,7 @@ function Home() {
               <div>
                 <span className="section-kicker">خطوتك التالية تبدأ هنا</span>
                 <h2 id="closing-title">لديك فكرة؟<br />لنجعلها تجربة رقمية تستحق.</h2>
+                <p>أخبرنا بما تريد بناءه، وسنساعدك على تحديد البداية المناسبة.</p>
               </div>
               <a className="button-primary" href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" data-testid="link-closing-services">
                 تواصل معنا الآن <MessageCircle size={17} aria-hidden="true" />
