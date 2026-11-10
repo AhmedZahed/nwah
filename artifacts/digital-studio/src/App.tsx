@@ -358,7 +358,6 @@ function Home() {
             <div className="portfolio-intro">
               <span className="section-kicker">نماذج من اتجاهاتنا</span>
               <h2 className="section-title" id="portfolio-title">أفكار رقمية،<br />تأخذ شكلها المناسب.</h2>
-              <span className="portfolio-disclaimer">أمثلة توضيحية — ليست مشاريع لعملاء حقيقيين</span>
             </div>
             <p className="section-lead">ستة تصورات بصرية لأنواع تجارب يمكن أن نبنيها. كل مشروع يبدأ من احتياجك أنت، لا من قالب جاهز.</p>
           </div>
