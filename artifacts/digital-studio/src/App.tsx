@@ -297,7 +297,6 @@ function Home() {
                 تعرّف على طريقتنا
               </a>
             </div>
-            <div className="hero-note"><span aria-hidden="true" /> تفكير استراتيجي، تصميم واضح، وتطوير جاهز للنمو</div>
           </div>
 
           <div className="hero-art" aria-label="تصور لوحة أداء رقمية" role="img">
@@ -364,7 +363,7 @@ function Home() {
           <div className="portfolio-grid">
             {portfolioSamples.map((sample, index) => (
               <article className={`portfolio-card reveal${index % 3 ? ` reveal-delay-${index % 3}` : ''}`} key={sample.type}>
-                <div className={`portfolio-frame sample-${sample.type}`} role="img" aria-label={`تصور توضيحي: ${sample.title}`}>
+                <div className={`portfolio-frame sample-${sample.type}`} role="img" aria-label={`نموذج ${sample.title}`}>
                   <div className="sample-window" aria-hidden="true">
                     <div className="sample-browser"><i /><i /><i /></div>
                     <div className="sample-page">
@@ -379,7 +378,6 @@ function Home() {
                 </div>
                 <h3>{sample.title}</h3>
                 <p>{sample.description}</p>
-                <span className="sample-tag">تصور توضيحي</span>
               </article>
             ))}
           </div>

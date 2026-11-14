@@ -136,8 +136,6 @@
 .button-primary:hover { transform: translateY(-3px); background: #ffa589; }
 .button-outline { padding: 14px 20px; color: #f5f1e7; border: 1px solid rgba(245,241,231,.3); }
 .button-outline:hover { transform: translateY(-3px); color: #f28d6d; border-color: #f28d6d; }
-.hero-note { display: flex; align-items: center; gap: 9px; color: rgba(245,241,231,.68); font-size: 13px; margin-top: 25px; }
-.hero-note span { width: 5px; height: 5px; border-radius: 50%; background: #64bfaa; }
 .hero-art { min-height: 480px; position: relative; display: grid; place-items: center; animation: rise-in .8s .12s both; }
 .orbit { position: absolute; width: min(36vw, 440px); aspect-ratio: 1; border: 1px solid rgba(221,231,214,.14); border-radius: 50%; }
 .orbit::before, .orbit::after { content: ''; position: absolute; border: 1px solid rgba(221,231,214,.11); border-radius: 50%; inset: 13%; }
@@ -228,7 +226,6 @@
 .portfolio-card:hover .portfolio-frame { transform: translateY(-5px); box-shadow: 0 19px 35px rgba(23,59,55,.13); }
 .portfolio-card h3 { font-size: 20px; line-height: 1.45; margin: 16px 0 2px; letter-spacing: -.03em; }
 .portfolio-card p { color: #596760; margin: 0; font-size: 15px; }
-.portfolio-card .sample-tag { display: inline-block; margin-top: 11px; color: #8d594a; font-size: 12px; font-weight: 700; }
 .sample-window { position: absolute; inset: 13% 11%; border-radius: 8px; overflow: hidden; box-shadow: 0 9px 24px rgba(29,46,39,.12); }
 .sample-browser { height: 12%; min-height: 13px; display: flex; align-items: center; gap: 3px; padding-inline: 8px; background: rgba(255,255,255,.78); }
 .sample-browser i { display: block; width: 4px; height: 4px; border-radius: 50%; background: #b8b9aa; }
