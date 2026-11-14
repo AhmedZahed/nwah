@@ -1,5 +1,4 @@
 import { useEffect, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { createPortal } from 'react-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
@@ -8,8 +7,6 @@ import NotFound from '@/pages/not-found';
 import {
   Check,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   Cloud,
   Fingerprint,
   Globe2,
@@ -27,12 +24,6 @@ import {
   useLocation,
   Router as WouterRouter,
 } from 'wouter';
-import lawOfficeLogo from '@assets/0_Screenshot_2026-11-10_at_9.45.53_AM_1794293683170.png';
-import lawOfficeHome from '@assets/1_Screenshot_2026-11-10_at_9.46.02_AM_1794293683184.png';
-import lawOfficeConsultation from '@assets/2_Screenshot_2026-11-10_at_9.46.13_AM_1794293683187.png';
-import lawOfficeServices from '@assets/3_Screenshot_2026-11-10_at_9.46.49_AM_1794293683188.png';
-import lawOfficeAbout from '@assets/4_Screenshot_2026-11-10_at_9.46.59_AM_1794293683189.png';
-import lawOfficeContact from '@assets/5_Screenshot_2026-11-10_at_9.47.11_AM_1794293683190.png';
 
 const queryClient = new QueryClient();
 const WHATSAPP_URL = 'https://wa.me/966595155393';
@@ -141,21 +132,12 @@ const faqs = [
 ];
 
 const portfolioSamples = [
-  { type: 'law-office', title: 'مكتب المحامي سليمان المعلمي', description: 'موقع متكامل للمحاماة والاستشارات القانونية، يعرض مجالات العمل ويسهّل طلب الاستشارة.', isReal: true },
-  { type: 'shop', title: 'متجر إلكتروني', description: 'واجهة مرتبة لعرض المنتجات وتسهيل رحلة الشراء.', isReal: false },
-  { type: 'food', title: 'موقع لمطعم', description: 'قائمة واضحة وهوية رقمية تفتح الشهية للاكتشاف.', isReal: false },
-  { type: 'realestate', title: 'منصة عقارية', description: 'عرض بصري يساعد الزائر على استكشاف الخيارات.', isReal: false },
-  { type: 'course', title: 'منصة تعليمية', description: 'مساحة منظمة للتعلم ومتابعة المحتوى.', isReal: false },
-  { type: 'clinic', title: 'موقع لعيادة', description: 'معلومات وخدمات سهلة الوصول من أي جهاز.', isReal: false },
-];
-
-const lawOfficeScreenshots = [
-  { src: lawOfficeHome, label: 'الصفحة الرئيسية' },
-  { src: lawOfficeServices, label: 'مجالات العمل' },
-  { src: lawOfficeConsultation, label: 'طلب استشارة' },
-  { src: lawOfficeAbout, label: 'عن المكتب' },
-  { src: lawOfficeContact, label: 'التواصل' },
-  { src: lawOfficeLogo, label: 'الشعار' },
+  { type: 'shop', title: 'متجر إلكتروني', description: 'واجهة مرتبة لعرض المنتجات وتسهيل رحلة الشراء.' },
+  { type: 'food', title: 'موقع لمطعم', description: 'قائمة واضحة وهوية رقمية تفتح الشهية للاكتشاف.' },
+  { type: 'realestate', title: 'منصة عقارية', description: 'عرض بصري يساعد الزائر على استكشاف الخيارات.' },
+  { type: 'course', title: 'منصة تعليمية', description: 'مساحة منظمة للتعلم ومتابعة المحتوى.' },
+  { type: 'clinic', title: 'موقع لعيادة', description: 'معلومات وخدمات سهلة الوصول من أي جهاز.' },
+  { type: 'app', title: 'لوحة أعمال رقمية', description: 'مؤشرات وأدوات عمل ضمن تجربة واحدة.' },
 ];
 
 function usePageMotion() {
@@ -221,110 +203,6 @@ function CountUp({ target, suffix = '' }: { target: number; suffix?: string }) {
     <span id={`count-${target}`} className="proof-number" aria-label={`${target}${suffix}`}>
       {new Intl.NumberFormat('en-US').format(value)}{suffix}
     </span>
-  );
-}
-
-function LawOfficeGallery() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    const handleKeyDown = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [isOpen]);
-
-  const changeImage = (direction: number) => {
-    setActiveIndex((current) => (current + direction + lawOfficeScreenshots.length) % lawOfficeScreenshots.length);
-  };
-  const activeImage = lawOfficeScreenshots[activeIndex];
-
-  return (
-    <>
-      <div className="law-gallery">
-        <button
-          className="law-gallery-preview"
-          type="button"
-          onClick={() => setIsOpen(true)}
-          aria-label={`تكبير لقطة ${activeImage.label} من موقع مكتب المحاماة`}
-          data-testid="button-open-law-office-gallery"
-        >
-          <img src={activeImage.src} alt="" loading="lazy" />
-          <span className="law-gallery-zoom">استعرض صور الموقع</span>
-        </button>
-        <div className="law-gallery-thumbnails" role="group" aria-label="لقطات موقع مكتب المحاماة">
-          {lawOfficeScreenshots.map((image, index) => (
-            <button
-              key={image.label}
-              className={`law-gallery-thumb${activeIndex === index ? ' active' : ''}`}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              aria-label={`عرض ${image.label}`}
-              aria-pressed={activeIndex === index}
-              data-testid={`button-law-office-image-${index + 1}`}
-            >
-              <img src={image.src} alt="" loading="lazy" />
-            </button>
-          ))}
-        </div>
-      </div>
-      {isOpen && createPortal(
-        <div className="law-gallery-backdrop">
-          <section className="law-gallery-dialog" role="dialog" aria-modal="true" aria-label="معرض موقع مكتب المحامي سليمان المعلمي">
-            <div className="law-gallery-dialog-header">
-              <div>
-                <strong>مكتب المحامي سليمان المعلمي</strong>
-                <span>{activeImage.label} · {activeIndex + 1} / {lawOfficeScreenshots.length}</span>
-              </div>
-              <button
-                className="law-gallery-close"
-                type="button"
-                onClick={() => setIsOpen(false)}
-                aria-label="إغلاق معرض الصور"
-                data-testid="button-close-law-office-gallery"
-                autoFocus
-              >
-                <X size={22} aria-hidden="true" />
-              </button>
-            </div>
-            <div className="law-gallery-stage">
-              <button type="button" className="law-gallery-nav" onClick={() => changeImage(-1)} aria-label="الصورة السابقة" data-testid="button-law-office-previous">
-                <ChevronRight size={24} aria-hidden="true" />
-              </button>
-              <img src={activeImage.src} alt={`لقطة ${activeImage.label} من موقع مكتب المحامي سليمان المعلمي`} />
-              <button type="button" className="law-gallery-nav" onClick={() => changeImage(1)} aria-label="الصورة التالية" data-testid="button-law-office-next">
-                <ChevronLeft size={24} aria-hidden="true" />
-              </button>
-            </div>
-            <div className="law-gallery-dialog-thumbnails" role="group" aria-label="التنقل بين لقطات الموقع">
-              {lawOfficeScreenshots.map((image, index) => (
-                <button
-                  key={image.label}
-                  className={`law-gallery-thumb${activeIndex === index ? ' active' : ''}`}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`عرض ${image.label}`}
-                  aria-pressed={activeIndex === index}
-                  data-testid={`button-law-office-modal-image-${index + 1}`}
-                >
-                  <img src={image.src} alt="" />
-                </button>
-              ))}
-            </div>
-          </section>
-        </div>
-      , document.body)}
-    </>
   );
 }
 
@@ -481,32 +359,27 @@ function Home() {
               <span className="section-kicker">نماذج من اتجاهاتنا</span>
               <h2 className="section-title" id="portfolio-title">أفكار رقمية،<br />تأخذ شكلها المناسب.</h2>
             </div>
-            <p className="section-lead">استعرض موقع مكتب محاماة حقيقيًا من أعمالنا، مع لقطات لصفحاته المختلفة، إلى جانب تصورات إضافية لأفكار رقمية متنوعة.</p>
+            <p className="section-lead">ستة تصورات بصرية لأنواع تجارب يمكن أن نبنيها. كل مشروع يبدأ من احتياجك أنت، لا من قالب جاهز.</p>
           </div>
           <div className="portfolio-grid">
             {portfolioSamples.map((sample, index) => (
               <article className={`portfolio-card reveal${index % 3 ? ` reveal-delay-${index % 3}` : ''}`} key={sample.type}>
-                {sample.type === 'law-office' ? (
-                  <div className="portfolio-frame law-office-frame">
-                    <LawOfficeGallery />
-                  </div>
-                ) : (
-                  <div className={`portfolio-frame sample-${sample.type}`} role="img" aria-label={`تصور توضيحي: ${sample.title}`}>
-                    <div className="sample-window" aria-hidden="true">
-                      <div className="sample-browser"><i /><i /><i /></div>
-                      <div className="sample-page">
-                        {sample.type === 'shop' && <><span className="sample-word">اختيارك اليوم</span><span className="sample-product" /><span className="sample-copy" /></>}
-                        {sample.type === 'food' && <><span className="sample-plate" /><span className="sample-word" /></>}
-                        {sample.type === 'realestate' && <><span className="sample-sun" /><span className="sample-building" /></>}
-                        {sample.type === 'course' && <><span className="sample-word" /><span className="sample-book" /></>}
-                        {sample.type === 'clinic' && <><span className="sample-clinic-lines" /><span className="sample-cross" /></>}
-                      </div>
+                <div className={`portfolio-frame sample-${sample.type}`} role="img" aria-label={`تصور توضيحي: ${sample.title}`}>
+                  <div className="sample-window" aria-hidden="true">
+                    <div className="sample-browser"><i /><i /><i /></div>
+                    <div className="sample-page">
+                      {sample.type === 'shop' && <><span className="sample-word">اختيارك اليوم</span><span className="sample-product" /><span className="sample-copy" /></>}
+                      {sample.type === 'food' && <><span className="sample-plate" /><span className="sample-word" /></>}
+                      {sample.type === 'realestate' && <><span className="sample-sun" /><span className="sample-building" /></>}
+                      {sample.type === 'course' && <><span className="sample-word" /><span className="sample-book" /></>}
+                      {sample.type === 'clinic' && <><span className="sample-clinic-lines" /><span className="sample-cross" /></>}
+                      {sample.type === 'app' && <><span className="sample-sidebar" /><span className="sample-panel" /><span className="sample-tile" /></>}
                     </div>
                   </div>
-                )}
+                </div>
                 <h3>{sample.title}</h3>
                 <p>{sample.description}</p>
-                <span className={`sample-tag${sample.isReal ? ' real-project-tag' : ''}`}>{sample.isReal ? 'من أعمالنا' : 'تصور توضيحي'}</span>
+                <span className="sample-tag">تصور توضيحي</span>
               </article>
             ))}
           </div>

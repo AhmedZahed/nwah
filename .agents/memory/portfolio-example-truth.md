@@ -3,8 +3,8 @@ name: Portfolio examples
 description: The user wants real project samples in the agency website portfolio.
 ---
 
-The user wants the agency portfolio to show real work. Their six supplied screenshots depict different parts of one law-office website, not six separate projects.
+Keep the original six illustrative portfolio samples unchanged. The user asked to remove the law-office project gallery that had been added.
 
-**Why:** The user identified the first website as a law office, and the six screenshots share the same site identity.
+**Why:** The user explicitly corrected the portfolio direction and requested removing the addition.
 
-**How to apply:** Keep the six images together as one project gallery. Use only supplied project details, and keep any remaining concept examples clearly labeled as illustrative.
+**How to apply:** Do not re-add the law-office screenshots to the site unless the user asks again.
